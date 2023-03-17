@@ -51,7 +51,7 @@ const editTask = async (req, res) => {
     if (!task) {
       return res.status(404).json({ msg: `No task with id of ${taskId}` });
     }
-    res.status(200).json({ id: taskId, data: req.body });
+    res.status(200).json({ task });
   } catch (error) {
     res.status(500).json({ error });
   }

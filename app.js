@@ -18,10 +18,7 @@ const start = async () => {
 };
 // middleware, use this to have data in req.body
 app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.use(express.static("./public"));
 
 // routes
 app.use("/api/v1/tasks", tasksRoutes);
