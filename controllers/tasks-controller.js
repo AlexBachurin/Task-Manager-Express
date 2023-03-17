@@ -37,8 +37,24 @@ const createTask = async (req, res) => {
   }
 };
 // PATCH to edit task
-const editTask = (req, res) => {
-  res.send("Edit task");
+const editTask = async (req, res) => {
+  try {
+    // id with which we find task which we need to update
+    const { id: taskId } = req.params;
+    // grab data from frontend request with properties which to update
+    const task = await Task.findOneAndUpdate({ _id: taskId }, req.body, {
+      // return new item in response which is already updated
+      new: true,
+      // run validators in schema
+      runValidators: true,
+    });
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id of ${taskId}` });
+    }
+    res.status(200).json({ id: taskId, data: req.body });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 // DELETE to delete task
 const deleteTask = async (req, res) => {
